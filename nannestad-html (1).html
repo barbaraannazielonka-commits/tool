@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIVESTK - Nannestad Testen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(to bottom right, #eff6ff, #ecfeff);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            color: #374151;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        .info-box {
+            max-width: 800px;
+            margin: 1.5rem auto;
+            background: #dbeafe;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            text-align: left;
+        }
+
+        .info-box p {
+            color: #374151;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .info-box h3 {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .wheel-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .category-section {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-section:last-child {
+            border-bottom: none;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon-box {
+            padding: 0.75rem;
+            border-radius: 9999px;
+            flex-shrink: 0;
+        }
+
+        .category-info {
+            flex: 1;
+        }
+
+        .category-info h3 {
+            font-size: 1.125rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .category-info p {
+            font-size: 0.875rem;
+            color: #4b5563;
+            font-style: italic;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-left: 4rem;
+        }
+
+        .slider-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            width: 2rem;
+        }
+
+        .slider-label.right {
+            text-align: right;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 0.5rem;
+            border-radius: 0.5rem;
+            appearance: none;
+            cursor: pointer;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: 2px solid currentColor;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: 2px solid currentColor;
+        }
+
+        .value-display {
+            width: 3rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            color: white;
+            font-size: 1.125rem;
+        }
+
+        .button-container {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background: #6b7280;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #4b5563;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-card h2 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .summary-item .name {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .summary-item .value {
+            font-size: 1.875rem;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .action-section {
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+        }
+
+        .action-section h2 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .action-section h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .action-section h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .action-section p {
+            color: #374151;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>FIVESTK</h1>
+            <p>Et interaktivt hjelpemiddel for pedagogisk refleksjon</p>
+            <div class="info-box">
+                <p>Dette verktøyet er utviklet av seks lærere ved Nannestad videregående skole, og har som mål å hjelpe deg å reflektere over ulike aspekter av ditt undervisningsarbeid. Verktøyet brukes for å finne ut hvor «skoen trykker», samtidig som det hjelper deg å identifisere hvilke områder du ønsker å forberede bedre, og hvilke områder du allerede er godt fornøyd med. Bruk dette verktøyet som en støtte i din profesjonelle utvikling, og for å få en bedre oversikt over hvilke områder du kan jobbe videre med. Er du leder, kan du bruke dette verktøyet i samtaler med ansatte du har ansvar for.</p>
+                <h3>Hvordan tar du i bruk dette verktøyet?</h3>
+                <p>Rett under denne teksten ser du et hjul som viser sju kategorier. Hjulet brukes for å visualisere disse kategoriene og vil endre seg når du begynner å velge tall fra 1 til 7. Under hver kategori får du en kort definisjon av hva det valgte området omfatter. Marker selv hvordan du opplever de ulike områdene i ditt arbeid ved å bevege den blå linjen til venstre eller høyre. Skalaen går fra 1 til 7, der 7 betyr at du er veldig fornøyd med dette området, og 1 betyr at det er rom for utvikling. Vær ærlig for å få et riktig bilde. Når du er ferdig, anbefaler vi å ta bilde eller skjermdump av hjulet ditt eller oppsummeringen som vises nederst på siden.</p>
+            </div>
+        </div>
+
+        <div class="main-card">
+            <div class="wheel-container">
+                <svg id="wheel" width="500" height="500" viewBox="0 0 500 500"></svg>
+            </div>
+
+            <div id="categories"></div>
+
+            <div class="button-container">
+                <button onclick="resetAll()">Tilbakestill alle</button>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <h2>Din oppsummering</h2>
+            <div class="summary-grid" id="summary"></div>
+        </div>
+
+        <div class="action-section">
+            <h2>Hva gjør du med resultatene?</h2>
+            <h3>For ledere:</h3>
+            <p>Bruk resultatene fra hjulet som utgangspunkt for samtaler med ansatte. Fokusér på områder med lave scorer, og still spørsmål som hjelper medarbeideren å reflektere, lære og utvikle seg. Målet er å støtte og legge til rette for videre utvikling.</p>
+            <h3>For lærere:</h3>
+            <p>Reflekter over egne styrker og utviklingsområder. Velg ett eller flere områder å jobbe med, sett konkrete mål og lag en enkel handlingsplan. Diskuter gjerne med kollegaer eller ledere, og følg opp over tid for å se om tiltakene gir effekt.</p>
+        </div>
+    </div>
+
+    <script>
+        const categories = [
+            { 
+                name: 'Egen omsorg', 
+                color: '#4169E1',
+                description: 'Det du gjør for å ta vare på deg selv fysisk og mentalt, slik at du kan være en god og effektiv lærer. Du vet hva du må gjøre for å unngå å bli utslitt.'
+            },
+            { 
+                name: 'Klasseledelse', 
+                color: '#FFD700',
+                description: 'Hvordan du skaper trygghet, struktur og klare rammer i klasserommet, og leder elevene både faglig og sosialt.'
+            },
+            { 
+                name: 'Samhandling', 
+                color: '#50C878',
+                description: 'Hvordan du samarbeider og kommuniserer med kollegaer, elever, ledelsen og foreldre for å skape et godt skolemiljø.'
+            },
+            { 
+                name: 'Faglig', 
+                color: '#6A0DAD',
+                description: 'Din faglige utvikling som lærer - hvordan du bygger kompetanse, deler kunnskap, varierer undervisningen og holder deg oppdatert.'
+            },
+            { 
+                name: 'IKT/Digitalt', 
+                color: '#FF1493',
+                description: 'Bruken av digitale verktøy og teknologi i undervisning og samarbeid, inkludert kildekritikk, KI og digital dømmekraft.'
+            },
+            { 
+                name: 'Tidsbruk', 
+                color: '#FF8C00',
+                description: 'Hvordan du planlegger, prioriterer og effektiviserer arbeidsoppgaver, og vurderer hva som er «godt nok».'
+            },
+            { 
+                name: 'Vurderingsmetoder', 
+                color: '#00CED1',
+                description: 'Hvordan du vurderer elevers arbeid og læring gjennom underveisvurdering, tilbakemeldinger og sluttvurdering. Hvor god du er til å bruke varierende undervisningsmetoder.'
+            }
+        ];
+
+        let ratings = {
+            'Egen omsorg': 4.0,
+            'Klasseledelse': 4.0,
+            'Samhandling': 4.0,
+            'Faglig': 4.0,
+            'IKT/Digitalt': 4.0,
+            'Tidsbruk': 4.0,
+            'Vurderingsmetoder': 4.0
+        };
+
+        function getSegmentColor(category, level) {
+            const rating = ratings[category];
+            const cat = categories.find(c => c.name === category);
+            
+            if (rating >= level) {
+                return cat.color;
+            }
+            
+            if (rating > level - 1 && rating < level) {
+                const fraction = rating - (level - 1);
+                if (fraction >= 0.5) {
+                    return cat.color + '80';
+                }
+            }
+            
+            return '#f0f0f0';
+        }
+
+        function drawWheel() {
+            const svg = document.getElementById('wheel');
+            svg.innerHTML = '';
+            
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            g.setAttribute('transform', 'translate(250, 250)');
+            
+            // Draw rings
+            for (let level = 1; level <= 7; level++) {
+                const radius = 30 + (level - 1) * 22;
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', '0');
+                circle.setAttribute('cy', '0');
+                circle.setAttribute('r', radius);
+                circle.setAttribute('fill', 'none');
+                circle.setAttribute('stroke', '#333');
+                circle.setAttribute('stroke-width', '2');
+                g.appendChild(circle);
+            }
+            
+            // Draw spokes and labels
+            categories.forEach((cat, idx) => {
+                const angle = (idx * 360 / 7) - 90;
+                const midAngle = angle + (360 / 7 / 2);
+                const radians = (angle * Math.PI) / 180;
+                const midRadians = (midAngle * Math.PI) / 180;
+                const x2 = Math.cos(radians) * 180;
+                const y2 = Math.sin(radians) * 180;
+                
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', '0');
+                line.setAttribute('y1', '0');
+                line.setAttribute('x2', x2);
+                line.setAttribute('y2', y2);
+                line.setAttribute('stroke', '#333');
+                line.setAttribute('stroke-width', '2');
+                g.appendChild(line);
+                
+                const labelRadius = 210;
+                const labelX = Math.cos(midRadians) * labelRadius;
+                const labelY = Math.sin(midRadians) * labelRadius;
+                
+                let rotation = midAngle + 90;
+                if (rotation > 90 && rotation < 270) {
+                    rotation += 180;
+                }
+                
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', labelX);
+                text.setAttribute('y', labelY);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('dominant-baseline', 'middle');
+                text.setAttribute('font-size', '13');
+                text.setAttribute('font-weight', 'bold');
+                text.setAttribute('fill', cat.color);
+                text.setAttribute('transform', `rotate(${rotation}, ${labelX}, ${labelY})`);
+                text.textContent = cat.name;
+                g.appendChild(text);
+            });
+            
+            // Draw segments
+            categories.forEach((cat, catIdx) => {
+                const startAngle = (catIdx * 360 / 7) - 90;
+                const endAngle = ((catIdx + 1) * 360 / 7) - 90;
+                
+                for (let level = 1; level <= 7; level++) {
+                    const innerRadius = 30 + (level - 1) * 22;
+                    const outerRadius = 30 + level * 22;
+                    
+                    const startRad = (startAngle * Math.PI) / 180;
+                    const endRad = (endAngle * Math.PI) / 180;
+                    
+                    const x1 = Math.cos(startRad) * innerRadius;
+                    const y1 = Math.sin(startRad) * innerRadius;
+                    const x2 = Math.cos(endRad) * innerRadius;
+                    const y2 = Math.sin(endRad) * innerRadius;
+                    const x3 = Math.cos(endRad) * outerRadius;
+                    const y3 = Math.sin(endRad) * outerRadius;
+                    const x4 = Math.cos(startRad) * outerRadius;
+                    const y4 = Math.sin(startRad) * outerRadius;
+                    
+                    const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+                    
+                    const pathData = `
+                        M ${x1} ${y1}
+                        A ${innerRadius} ${innerRadius} 0 ${largeArc} 1 ${x2} ${y2}
+                        L ${x3} ${y3}
+                        A ${outerRadius} ${outerRadius} 0 ${largeArc} 0 ${x4} ${y4}
+                        Z
+                    `;
+                    
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('d', pathData);
+                    path.setAttribute('fill', getSegmentColor(cat.name, level));
+                    path.setAttribute('stroke', '#fff');
+                    path.setAttribute('stroke-width', '1');
+                    g.appendChild(path);
+                }
+            });
+            
+            svg.appendChild(g);
+        }
+
+        function updateRating(category, value) {
+            ratings[category] = parseFloat(value);
+            drawWheel();
+            updateSummary();
+        }
+
+        function renderCategories() {
+            const container = document.getElementById('categories');
+            container.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                
+                const iconBox = document.createElement('div');
+                iconBox.className = 'icon-box';
+                iconBox.style.backgroundColor = cat.color + '30';
+                iconBox.innerHTML = '●';
+                iconBox.style.color = cat.color;
+                iconBox.style.fontSize = '1.5rem';
+                
+                const info = document.createElement('div');
+                info.className = 'category-info';
+                
+                const title = document.createElement('h3');
+                title.textContent = cat.name;
+                
+                const desc = document.createElement('p');
+                desc.textContent = cat.description;
+                
+                info.appendChild(title);
+                info.appendChild(desc);
+                header.appendChild(iconBox);
+                header.appendChild(info);
+                
+                const sliderContainer = document.createElement('div');
+                sliderContainer.className = 'slider-container';
+                
+                const label1 = document.createElement('span');
+                label1.className = 'slider-label';
+                label1.textContent = '1';
+                
+                const slider = document.createElement('input');
+                slider.type = 'range';
+                slider.min = '1';
+                slider.max = '7';
+                slider.step = '0.5';
+                slider.value = ratings[cat.name];
+                slider.style.background = `linear-gradient(to right, ${cat.color} 0%, ${cat.color} ${((ratings[cat.name] - 1) / 6) * 100}%, #e5e7eb ${((ratings[cat.name] - 1) / 6) * 100}%, #e5e7eb 100%)`;
+                slider.oninput = function() {
+                    updateRating(cat.name, this.value);
+                    this.style.background = `linear-gradient(to right, ${cat.color} 0%, ${cat.color} ${((this.value - 1) / 6) * 100}%, #e5e7eb ${((this.value - 1) / 6) * 100}%, #e5e7eb 100%)`;
+                    valueDisplay.textContent = this.value;
+                };
+                
+                const label2 = document.createElement('span');
+                label2.className = 'slider-label right';
+                label2.textContent = '7';
+                
+                const valueDisplay = document.createElement('span');
+                valueDisplay.className = 'value-display';
+                valueDisplay.style.backgroundColor = cat.color;
+                valueDisplay.textContent = ratings[cat.name];
+                
+                sliderContainer.appendChild(label1);
+                sliderContainer.appendChild(slider);
+                sliderContainer.appendChild(label2);
+                sliderContainer.appendChild(valueDisplay);
+                
+                section.appendChild(header);
+                section.appendChild(sliderContainer);
+                container.appendChild(section);
+            });
+        }
+
+        function updateSummary() {
+            const summary = document.getElementById('summary');
+            summary.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const item = document.createElement('div');
+                item.className = 'summary-item';
+                item.style.backgroundColor = cat.color + '20';
+                
+                const name = document.createElement('div');
+                name.className = 'name';
+                name.textContent = cat.name;
+                
+                const value = document.createElement('div');
+                value.className = 'value';
+                value.style.color = cat.color;
+                value.textContent = ratings[cat.name] + '/7';
+                
+                item.appendChild(name);
+                item.appendChild(value);
+                summary.appendChild(item);
+            });
+        }
+
+        function resetAll() {
+            Object.keys(ratings).forEach(key => ratings[key] = 4.0);
+            drawWheel();
+            renderCategories();
+            updateSummary();
+        }
+
+        // Initialize
+        drawWheel();
+        renderCategories();
+        updateSummary();
+    </script>
+</body>
+</html>
